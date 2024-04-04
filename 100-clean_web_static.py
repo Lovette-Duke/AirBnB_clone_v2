@@ -59,5 +59,5 @@ def do_clean(number=0):
     __exe = '/data/web_static/releases/web_static*'
     if number == 0:
         number = 1
-    local("rm -f `ls -t {} | awk 'NR>{}'`".format(__path, number))
-    run("rm -rf `ls -td {} | awk 'NR>{}'`".format(__exe, number))
+    local("rm -f $(ls -t {} | awk 'NR>{}')".format(__path, number))
+    run("rm -rf $(ls -td {} | awk 'NR>{}')".format(__exe, number))
