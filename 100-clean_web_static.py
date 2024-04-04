@@ -54,10 +54,16 @@ def deploy():
 
 
 def do_clean(number=0):
-    '''Clean webservers'''
-    __path = 'versions/*.tgz'
-    __exe = '/data/web_static/releases/web_static*'
-    if number == 0:
-        number = 1
-    local("rm -f $(ls -t {} | awk 'NR>{}')".format(__path, number))
-    run("rm -rf $(ls -td {} | awk 'NR>{}')".format(__exe, number))
+    '''deletes archives'''
+    number = 1 if int(number) == 0 else int(number)
+
+    _arch = sorted(os.listdir("versions"))
+    [_arch.pop() for i in range(number)]
+    with lcd("versions"):
+        [local("rm ./{}".format(a)) for a in _arch]
+
+    with cd("/data/web_static/releases"):
+        _arch = run("ls -tr").split()
+        _arch = [a for a in _arch if "web_static_" in a]
+        [_arch.pop() for i in range(number)]
+        [run("rm -rf ./{}".format(a)) for a in _arch]
