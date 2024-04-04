@@ -1,4 +1,4 @@
-# Configures a web server for deployment of web_static.
+# sets up a web servers for the deployment using Puppet
 
 # Nginx configuration file
 $nginx_conf = "server {
